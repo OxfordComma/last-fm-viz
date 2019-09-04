@@ -30,7 +30,7 @@ var byWeekPlays;
 var numStackedAreaArtists = 25;
 // var numStackedTracks = 30;
 var legendWidth = 200;
-const url = 'http://voyager:3000/data/music/tracks/'
+const url = '/data/music/tracks/'
 
 // var stackOffset = d3.stackOffsetSilhouette;
 var stackOffset = d3.stackOffsetWiggle;
