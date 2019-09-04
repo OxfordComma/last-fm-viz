@@ -496,8 +496,8 @@
   const year = 2019;
 
   loadTreeData(
-    'http://localhost:3000/data/music/tracks/'+year.toString(),
-    'http://localhost:3000/data/music/artists/'+year.toString()).then(data => {
+    '/data/music/tracks/'+year.toString(),
+    '/data/music/artists/'+year.toString()).then(data => {
     jsonData = data.jsonData;
     artistData = data.artistData;
     byWeekPlaysGenre = data.byWeekPlaysGenre;
