@@ -17,7 +17,7 @@ html(lang='en')
     script(src='https://unpkg.com/d3@5.6.0/dist/d3.min.js')
     script(src='https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-    link(href='../styles.css', rel='stylesheet')
+    link(href='../music-viz/styles.css', rel='stylesheet')
   body
     nav#navbar-placeholder.fixed-top
         include navbar.jade
@@ -28,4 +28,4 @@ html(lang='en')
         #stacked-area-artist-vertical.col-lg-4.d-none.d-md-block.p-0
           svg.stacked-area-artist-svg(style='margin-top: 54')
 
-    script(type='text/javascript', src='../music/treeBundle.js')
+    script(type='text/javascript', src='../music-viz/treeBundle.js')

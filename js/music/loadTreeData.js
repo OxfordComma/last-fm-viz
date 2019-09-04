@@ -7,7 +7,7 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
   return Promise.all([
     json(tracksUrl),
     json(artistsUrl),
-    json('../music/genreHierarchy.json'),
+    json('../music-viz/genreHierarchy.json'),
     // json('data/artists.json'), 
     // json('data/tracks.json')
     ]
