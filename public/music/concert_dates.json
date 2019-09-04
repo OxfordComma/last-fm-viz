@@ -1,0 +1,52 @@
+[
+  {
+    "artists": ["Tiny Moving Parts", "Mom Jeans"],
+    "date": "10-Feb-18",
+    "venue": "Sinclair"
+  },
+  {
+    "artists": "Sorority Noise",
+    "date": "4-Apr-18",
+    "venue": "Paradise Rock Club"
+  },
+  {
+    "artists": "Lord Huron",
+    "date": "30-Apr-18",
+    "venue": "House of Blues"
+  },
+  {
+    "artists": ["The Killers", "The National", "Julien Baker"],
+    "date": "23-May-18",
+    "venue": "Boston Calling"
+  },
+  {
+    "artists": "Japanese Breakfast",
+    "date": "1-Jun-18",
+    "venue": "Sinclair"
+  },
+  {
+    "artists": "Bon Iver",
+    "date": "5-Aug-18",
+    "venue": "LA Bowl"
+  },
+  {
+    "artists": "Mitski",
+    "date": "20-Oct-18",
+    "venue": "House of Blues"
+  },
+  {
+    "artists": "Mom Jeans",
+    "date": "1-Nov-18",
+    "venue": "ONCE Ballroom"
+  },
+  {
+    "artists": "Pinegrove",
+    "date": "24-Nov-18",
+    "venue": "Sinclair"
+  },
+  {
+    "artists": "Tiny Moving Parts",
+    "date": "25-Nov-18",
+    "venue": "House of Blues"
+  }
+]
