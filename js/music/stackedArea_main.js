@@ -30,6 +30,7 @@ var byWeekPlays;
 var numStackedAreaArtists = 25;
 // var numStackedTracks = 30;
 var legendWidth = 200;
+const url = 'http://voyager:3000/data/music/tracks/'
 
 // var stackOffset = d3.stackOffsetSilhouette;
 var stackOffset = d3.stackOffsetWiggle;
@@ -44,7 +45,7 @@ var year = script_tag.getAttribute("data-year").toString();
 var startDate = new Date(year, '00', '01');
 var endDate = new Date((+year+1).toString(), '00', '01');
 
-loadStackedArtistData('http://localhost:3000/data/music/tracks/'+year.toString(), startDate, endDate).then(data => {
+loadStackedArtistData(url+year.toString(), startDate, endDate).then(data => {
   jsonData = data.jsonData;
   artistData = data.artistData;
   byWeekPlaysGenre = data.byWeekPlaysGenre;
