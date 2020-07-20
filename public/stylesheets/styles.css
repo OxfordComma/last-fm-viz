@@ -1,0 +1,138 @@
+body {
+  margin: 0;
+  color: black;
+  background-color: #333;
+
+
+  font-family: 'Playfair Display' !important;
+  font: none;
+}
+
+text, input {
+  color: white;
+  fill: white;
+}
+
+#username-input text {
+  font-size: 4em;
+}
+
+#username-input input {
+  font-size: 8em;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 95% 5%;
+  grid-template-columns: 85% 15%;
+  width: 100vw;
+  height: 100vh;
+
+}
+
+.stacked-area {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.chart {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.legend {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+
+  cursor: pointer;
+}
+
+.footer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 3;
+
+}
+
+.x-axis text {
+  font-size: 4em;
+  opacity: 0.4;
+}
+
+.x-axis line {
+  color: #333;
+}
+
+/*.navbar {
+  margin-bottom: 0;
+}*/
+
+/*.row {
+  margin: 0;
+}
+
+.p-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}*/
+
+/*h1 {
+  font-size: 2.5em;
+  text-align: center;
+}*/
+
+/*Tree*/
+/*.tree path {
+  fill: none;
+  stroke: #a8a1dd;
+}*/
+
+/*.tree text {
+  font-size: 1.1em;
+  text-shadow:
+   -1px -1px 3px white,
+   -1px  1px 3px white,
+    1px -1px 3px white,
+    1px  1px 3px white;
+  cursor: pointer;
+}*/
+
+/*.artist-text {
+  font-size: 1.4em;
+  word-wrap: break-word;
+}*/
+
+.line-path {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  mix-blend-mode: multiply;
+  cursor: pointer;
+}
+
+/*.line-path:hover {
+  fill: lightblue;
+}*/
+
+/*.artist {
+  cursor: pointer;
+}*/
+
+/*.x-axis {
+  font-size: 1.4em;
+  fill: #635F5D;
+  font-family: 'Playfair Display';
+}*/
+
+/*.legend {
+  font-size: 1em;
+  fill: black;
+}*/

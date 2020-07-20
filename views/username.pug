@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    //- Set device width to ensure proper renering on mobile devices
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    //- script(type='text/javascript'  src='/UsernameInput.js')
+
+  link(rel='stylesheet' href='/stylesheets/normalize.css')
+  link(rel='stylesheet' href='/stylesheets/styles.css')
+
+  body
+    div.background(width="100vw", height="100")
+    div#username-input
+      form(action='/lastfm/musicstream')
+        label(htmlFor="username")
+          text Last.fm username
+        //- input(type="text", name="pages", id="pages", autocomplete="off", value="10", hidden)
+        input(type="text", name="username", id="username", required="required", autocomplete="off", autofocus, style="background: transparent; border: none; caret-color: white; outline: none")
+        input(type="submit" hidden)
