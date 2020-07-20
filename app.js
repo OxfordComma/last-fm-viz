@@ -42,7 +42,7 @@ app.set('json spaces', 2)
 
 app.use('/', indexRouter)
 app.use('/lastfm', lastFmRouter)
-app.use('/auth', authRouter)
+// app.use('/auth', authRouter)
 app.use('/data', dataRouter)
 
 // catch 404 and forward to error handler
