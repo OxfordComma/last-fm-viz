@@ -22,7 +22,7 @@ var fetch = require('node-fetch')
 /* GET home page. */
 // router.get('/music/tracks/:year', function(req, res, next) {
 // 	const MongoClient = require('mongodb').MongoClient;
-// 	const uri = "mongodb+srv://musicdb:musicdb@cluster0-cld3q.mongodb.net/test?retryWrites=true&w=majority";
+// 	const uri = process.env.mongo_url
 // 	const client = new MongoClient(uri, { useNewUrlParser: true });
 // 	client.connect(err => {
 // 		if (err) throw err;
