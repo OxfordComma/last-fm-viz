@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.redirect('/music/2019');
+  res.redirect('/lastfm/username');
 });
 
 module.exports = router;

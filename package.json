@@ -7,24 +7,47 @@
     "devstart": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.10.5",
     "async": "^3.1.0",
     "cookie-parser": "~1.4.4",
+    "d3": "^5.15.1",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "eslint-plugin-react": "^7.19.0",
     "express": "~4.16.1",
+    "express-session": "^1.17.1",
+    "helmet": "^3.23.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jquery": "^3.4.1",
     "lastfmapi": "^0.1.1",
     "mongodb": "^3.3.0",
     "mongoose": "^5.6.9",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.0",
+    "passport": "^0.4.1",
+    "passport-spotify": "^1.1.0",
+    "pug": "^3.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "spotify-web-api-node": "^4.0.0",
+    "webpack": "^4.42.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.3.0",
+    "eslint-loader": "^3.0.4",
     "nodemon": "^1.19.1",
     "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "webpack-cli": "^3.3.11"
   }
 }
