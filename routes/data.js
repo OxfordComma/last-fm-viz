@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 var async = require('async')
 var LastfmAPI = require('lastfmapi')
-var spotifyHelper = require('../dl/spotifyHelper.js')
+// var spotifyHelper = require('../dl/spotifyHelper.js')
 var fetch = require('node-fetch')
 // router.get('/spotify', async function(req, res, next) {
 // 	if (req.session.passport && req.session.passport.user.spotify) {
