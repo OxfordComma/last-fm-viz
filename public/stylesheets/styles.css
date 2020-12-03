@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  color: black;
-  background-color: #333;
+  /*color: black;*/
+  background-color: #333333;
 
 
   font-family: 'Playfair Display' !important;
@@ -13,12 +13,36 @@ text, input {
   fill: white;
 }
 
+.x-axis text {
+  font-size: 4em;
+  opacity: 0.4;
+}
+
+.x-axis line {
+  color: #333;
+}
+
 #username-input text {
   font-size: 4em;
 }
 
 #username-input input {
   font-size: 8em;
+}
+@media only screen and (max-width: 768px) {
+  #username-input text {
+    font-size: 1.5em;
+  }
+  #username-input input {
+    font-size: 4em;
+  }
+  .x-axis text {
+    font-size: 2em;
+  }
+
+  text {
+    font-size: 0.5em;
+  }
 }
 
 .container {
@@ -27,15 +51,16 @@ text, input {
   grid-template-columns: 85% 15%;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 
 }
 
-.stacked-area {
+/*.stacked-area {
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 1;
-  grid-column-end: 2;
-}
+  grid-column-end: 3;
+}*/
 
 .chart {
   grid-row-start: 1;
@@ -46,29 +71,24 @@ text, input {
 
 .legend {
   grid-row-start: 1;
-  grid-row-end: 2;
+  grid-row-end: 3;
   grid-column-start: 2;
   grid-column-end: 3;
-
+  justify-self: end;
   cursor: pointer;
+  /*overflow: hidden;*/
 }
 
 .footer {
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 2;
 
+  /*justify-content: left;*/
 }
 
-.x-axis text {
-  font-size: 4em;
-  opacity: 0.4;
-}
 
-.x-axis line {
-  color: #333;
-}
 
 /*.navbar {
   margin-bottom: 0;

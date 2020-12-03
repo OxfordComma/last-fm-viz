@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.10.5",
+    "apicache": "^1.5.3",
     "async": "^3.1.0",
     "cookie-parser": "~1.4.4",
     "d3": "^5.15.1",

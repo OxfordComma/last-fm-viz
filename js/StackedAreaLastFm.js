@@ -17,8 +17,9 @@ class StackedAreaLastFm extends React.Component {
 
 			legendBy: d => d['artist']['#text'],
 			nestBy: d => this.getWeekDateTime(d.date['#text']),
-			legendLimit: 10,
-			username: document.getElementById('username').getAttribute("username").toString(),
+			legendLimit: 20,
+			username: JSON.parse(document.currentScript.getAttribute('username')).username,
+			oneYear: JSON.parse(document.currentScript.getAttribute('oneyear')).oneyear
 		}
 
 		this.onClickLegend = this.onClickLegend.bind(this)
@@ -31,6 +32,7 @@ class StackedAreaLastFm extends React.Component {
 
 		this.graphRef = React.createRef()
 		this.legendRef = React.createRef()
+		this.svgRef = React.createRef()
 	}
 
 	// Helper functions
@@ -54,6 +56,11 @@ class StackedAreaLastFm extends React.Component {
 
 	async componentDidMount() {
 		var dataUrl = "/data/music/lastfm/tracks?username="+this.state.username
+		console.log(this.state)
+		if (this.state.oneYear !== undefined && this.state.oneYear == 'true') {
+			console.log('Start and end date')
+			dataUrl = "/data/music/lastfm/tracks/oneyear?username="+this.state.username
+		}
 		var data = await d3.json(dataUrl)
 		console.log(data)
 		
@@ -146,7 +153,7 @@ class StackedAreaLastFm extends React.Component {
 		else {
 			newData = currentData.map(d => {
 				d.selected = d==item ? true : false
-				return d            
+				return d
 			})
 		}
 		this.setState({ seriesData: newData })
@@ -163,27 +170,15 @@ class StackedAreaLastFm extends React.Component {
 	}
 
 	render() {
+		console.log(this.graphRef.current?.clientHeight)
 		return (
 			<div id='lastfm' className='container'>
-				<div className='chart' ref={this.graphRef}>
-					<StackedArea 
-						width={this.graphRef.current?.offsetWidth}
-						height={this.graphRef.current?.offsetHeight}
-						seriesData={this.state.seriesData}
-						xDomain={[this.xMin, this.xMax]}
-						yDomain={[this.yMin, this.yMax]}
-						numTicks={this.numTicks}
-						colorScale={this.colorScale}
-						onClickChartItem={this.onClickChartItem}
-						onClickBackground={this.onClickBackground}
-					/>
-				</div>
 				<div className='legend' ref={this.legendRef}>
 					<Legend
-						width={this.legendRef.current?.offsetWidth}
-						height={this.legendRef.current?.offsetHeight}
+						// svg={this.svgRef}
+						// width={this.legendRef.current?.offsetWidth}
+						// height={this.legendRef.current?.offsetHeight}
 						direction={'vertical'}
-						align={'right'}
 						legendItems={this.getLegendItems(this.state.jsonData)}
 						selectedLegendItems={this.state.seriesData.filter(d => d.selected).map(d => d.key)}
 						onClickLegend={this.onClickLegend}
@@ -191,6 +186,23 @@ class StackedAreaLastFm extends React.Component {
 						legendBy={this.state.legendBy}
 					/>
 				</div>
+				<div className='chart' ref={this.graphRef}>
+					<StackedArea
+						// svg={this.svgRef}
+						width={this.graphRef.current?.clientWidth * 0.8}
+						// width={window.innerWidth * 0.8}
+						height={this.graphRef.current?.clientHeight}
+						seriesData={this.state.seriesData}
+						xDomain={[this.xMin, this.xMax]}
+						yDomain={[this.yMin, this.yMax]}
+						numTicks={this.numTicks}
+						colorScale={this.colorScale}
+						onClickChartItem={this.onClickChartItem}
+						onClickBackground={this.onClickBackground}
+						radius={parseInt(window.innerWidth/100)}
+					/>
+				</div>
+				
 				<div className='footer'>
 					<p style={{'text-align': 'right'}}>Powered by <a href={'http://last.fm/user/'+this.state.username}>Last FM</a></p>
 				</div>

@@ -8,12 +8,8 @@ var passport = require('passport')
 var helmet = require('helmet')
 var session = require('express-session')
 
-
-
-
 var indexRouter = require('./routes/index');
 var dataRouter = require('./routes/data');
-// var authRouter = require('./routes/auth');
 var lastFmRouter = require('./routes/lastfm')
 
 var app = express();

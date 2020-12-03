@@ -1,16 +1,17 @@
 import { 
   hierarchy, 
   cluster, 
-  select,
+  // select,
+  max,
 	linkHorizontal
 } from 'd3';
 
 export const treemap = (selection, props) => {
   const {
-    jsonData,
-    deepestGenresByArtist,
-    totalPlaysArtist,
-    topArtists,
+    treeData,
+    // deepestGenresByArtist,
+    // totalPlaysArtist,
+    // topArtists,
     width,
     height,
     colorScale,
@@ -19,9 +20,9 @@ export const treemap = (selection, props) => {
     onClickGenre
   } = props;
 
-  console.log(deepestGenresByArtist)
+  // console.log(deepestGenresByArtist)
 
-  const topGenresTrimmed = topArtists.map(a => deepestGenresByArtist[a])
+  // const topGenresTrimmed = topArtists.map(a => deepestGenresByArtist[a])
   var maxGenreDepth = 0;
   
   const treeLayout = cluster()
@@ -30,7 +31,7 @@ export const treemap = (selection, props) => {
       return (a.parent == b.parent ? 1 : 1); 
     })
 
-  var root = hierarchy(jsonData); 
+  var root = hierarchy(treeData); 
 
   root.descendants().forEach(d => {
     maxGenreDepth = d.depth > maxGenreDepth ? d.depth : maxGenreDepth;
@@ -50,7 +51,7 @@ export const treemap = (selection, props) => {
     .x(d => d.y)
     .y(d => d.x);
 
-  const treeSpread = d3.max([width/7, 95]);
+  const treeSpread = max([width/7, 95]);
   selection.width = treeSpread * maxGenreDepth
 
   selection.selectAll('path').data(links)
@@ -76,7 +77,7 @@ export const treemap = (selection, props) => {
     })
     .transition(200)
       .attr('opacity', d => {
-        const path = root.path(d).map(p => p.data.id)
+        // const path = root.path(d).map(p => p.data.id)
 
         var childNames = d.descendants().map(c => c.data.id)
         return (

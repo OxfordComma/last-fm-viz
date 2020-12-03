@@ -65,7 +65,7 @@ export const stackedAreaHorizontal = (selection, props) => {
   xAxisGEnter
     .merge(xAxisG)
       .call(xAxis)
-      .attr('transform', `translate(0,${height})`)
+      .attr('transform', `translate(400,${height})`)
       // .selectAll('.domain').remove()
   
   xAxisGEnter.append('text')

@@ -1,34 +1,37 @@
 import {
   select,
-  json,
-  cluster,
-  hierarchy,
-  linkHorizontal,
+  // json,
+  // cluster,
+  // hierarchy,
+  // linkHorizontal,
   scaleOrdinal,
-  max,
+  // max,
   schemeCategory10,
   interpolateRainbow,
   // stackOrderInsideOut
 } from 'd3';
 
 import { loadStackedArtistData } from './loadStackedArtistData';
-import { treemap } from './treemap';
-import { stackedAreaHorizontal } from './stackedAreaHorizontal';
+// import { treemap } from './treemap';
+// import { stackedAreaHorizontal } from './stackedAreaHorizontal';
 import { stackedAreaVertical } from './stackedAreaVertical';
 import { colorLegend } from './colorLegend';
 
 var jsonData, artistData;
 var byWeekPlaysGenre, totalPlaysByGenre;
-var byWeekPlaysArtist, totalPlaysByArtist;
+var byWeekPlaysArtist
+, totalPlaysByArtist;
 var byWeekPlaysTrack, totalPlaysByTrack;
-var artistColorScale, genreColorScale, trackColorScale;
-var topArtists, topGenres, topTracks;
+var artistColorScale
+, genreColorScale, trackColorScale;
+var topArtists, topGenres
+, topTracks;
 var selectedArtists = []; 
 var selectedTracks = [];
 var deepestGenresByArtist;
 var byWeekPlays;
 var numStackedAreaArtists = 25;
-// var numStackedTracks = 30;
+var numStackedTracks = 30;
 var legendWidth = 200;
 const url = '/data/music/tracks/'
 
@@ -92,7 +95,7 @@ loadStackedArtistData(url+year.toString(), startDate, endDate).then(data => {
   artistLegendG = verticalAreaSvg
     .append('g')
       .attr('class', 'legend-container d-none d-md-block')
-      .attr('transform', `translate(${document.getElementById('stacked-area-artist').clientWidth - legendWidth},${10})`);
+      .attr('transform', `translate(${document.getElementById('stacked-area-artist').clientWidth - legendWidth-300},${10})`);
   
   render();
 })
@@ -117,15 +120,15 @@ const onClickArtistUnique = d => {
   render(); 
 };
 
-const onClickTrack = d => {
-  if (!selectedTracks.includes(d))
-    selectedTracks.push(d);
-  else
-    selectedTracks = selectedTracks.filter(val => val != d);
+// const onClickTrack = d => {
+//   if (!selectedTracks.includes(d))
+//     selectedTracks.push(d);
+//   else
+//     selectedTracks = selectedTracks.filter(val => val != d);
   
-  console.log(selectedTracks)
-  render(); 
-};
+//   console.log(selectedTracks)
+//   render(); 
+// };
 
 const render = () => {
   verticalAreaG.call(stackedAreaVertical, {

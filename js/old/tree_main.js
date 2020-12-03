@@ -1,55 +1,64 @@
 import {
   select,
-  json,
-  cluster,
+  // json,
+  // cluster,
   hierarchy,
-  linkHorizontal,
-  zoom,
-  event,
-  scaleSequential,
+  // linkHorizontal,
+  // zoom,
+  // event,
+  // scaleSequential,
   scaleOrdinal,
-  max,
-  interpolateRdBu,
-  interpolatePlasma,
-  schemeCategory10,
+  // max,
+  // interpolateRdBu,
+  // interpolatePlasma,
+  // schemeCategory10,
   interpolateRainbow
 } from 'd3';
 
 import { loadTreeData } from './loadTreeData';
+import { loadStackedArtistData } from './loadStackedArtistData'
 import { treemap } from './treemap';
 import { stackedAreaVertical } from './stackedAreaVertical';
-import { colorLegend } from './colorLegend';
+// import { colorLegend } from './colorLegend';
 
-var jsonData, artistData, byWeekPlaysGenre, byWeekPlaysArtist, totalPlaysByArtist;
-var artistColorScale, genreColorScale;
-var topArtists, topArtistsTrimmed, topGenres;
+var treeData,
+artistData, byWeekPlaysGenre, 
+byWeekPlaysArtist
+, totalPlaysByArtist;
+var artistColorScale
+// , genreColorScale;
+var topArtists, topArtistsTrimmed
+, topGenres;
 var playScale;
 var selectedArtists = []; 
 var selectedGenre;
 var deepestGenresByArtist;
 var byWeekPlays;
 
-var verticalAreaG, artistLegendG, treeG;
+var verticalAreaG, 
+// artistLegendG, 
+treeG;
 var treeWidth, treeHeight, areaWidth, areaHeight;
 
-const numArtists = 40;
+const numArtists = 100;
 const year = 2019
 
 loadTreeData(
   '/data/music/tracks/'+year.toString(),
   '/data/music/artists/'+year.toString()).then(data => {
-  jsonData = data.jsonData;
-  artistData = data.artistData;
-  byWeekPlaysGenre = data.byWeekPlaysGenre;
+  treeData = data.treeData;
+  console.log(treeData)
+  // artistData = data.artistData;
+  // byWeekPlaysGenre = data.byWeekPlaysGenre;
   byWeekPlaysArtist = data.byWeekPlaysArtist;
-  topGenres = data.topGenres;
+  // topGenres = data.topGenres;
   topArtists = data.topArtists;
   deepestGenresByArtist = data.deepestGenresByArtist;
-  totalPlaysByArtist = data.totalPlaysByArtist;
+  // totalPlaysByArtist = data.totalPlaysByArtist;
 
 
   treeWidth = document.getElementById('tree').clientWidth < 500 ? 1000 : document.getElementById('tree').clientWidth
-  treeHeight = 1000;
+  treeHeight = numArtists * 15;
   
   areaWidth = document.getElementById('stacked-area-artist-vertical').clientWidth;
   areaHeight = treeHeight;  
@@ -76,20 +85,21 @@ loadTreeData(
     // .attr('class', 'd-none d-md-block')
     .attr('transform', `translate(${0}, ${0}), rotate(90)`);
 
-  artistLegendG = verticalAreaSvg.append('g')
-    .attr('class', 'legend')
-    .attr('transform', `translate(${5},${5})`)
+  // artistLegendG = verticalAreaSvg.append('g')
+  //   .attr('class', 'legend')
+  //   .attr('transform', `translate(${5},${5})`)
 
   treeG = treeSvg.append('g')
     .attr('class', 'tree')
 
 
   topArtistsTrimmed = topArtists.slice(0, numArtists);
-  const topGenresTrimmed = topArtistsTrimmed.map(a => deepestGenresByArtist[a])
-  addArtistsToTree(topArtistsTrimmed, jsonData);
-  removeEmptyLeaves(jsonData)
+  console.log(topArtistsTrimmed)
+  // const topGenresTrimmed = topArtistsTrimmed.map(a => deepestGenresByArtist[a])
+  addArtistsToTree(topArtistsTrimmed, treeData);
+  removeEmptyLeaves(treeData)
   
-  topArtistsTrimmed = hierarchy(jsonData).leaves().map(d=>d.data.id);
+  topArtistsTrimmed = hierarchy(treeData).leaves().map(d=>d.data.id);
 
 
   artistColorScale = scaleOrdinal()
@@ -100,12 +110,12 @@ loadTreeData(
   artistColorScale
     .range(artistColorScale.domain().map((d, i) => interpolateRainbow(i/(n+1))));
 
-  genreColorScale = scaleOrdinal()
-    .domain(topGenres)
-    .range(schemeCategory10);
+  // genreColorScale = scaleOrdinal()
+  //   .domain(topGenres)
+  //   .range(schemeCategory10);
 
-  playScale = scaleSequential(interpolatePlasma)
-    .domain([0, max(Object.values(totalPlaysByArtist)) + 100]);
+  // playScale = scaleSequential(interpolatePlasma)
+  //   .domain([0, max(Object.values(totalPlaysByArtist)) + 100]);
 
   render();
 })
@@ -149,10 +159,10 @@ const removeEmptyLeaves = function(t) {
 
 const render = () => {
   treeG.call(treemap, {
-    jsonData,
-    deepestGenresByArtist,
-    totalPlaysByArtist,
-    topArtists,
+    treeData,
+    // deepestGenresByArtist,
+    // totalPlaysByArtist,
+    // topArtists,
     width: treeWidth,
     height: treeHeight,
     colorScale: artistColorScale,

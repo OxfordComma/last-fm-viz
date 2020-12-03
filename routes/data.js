@@ -5,6 +5,11 @@ var async = require('async')
 var LastfmAPI = require('lastfmapi')
 // var spotifyHelper = require('../dl/spotifyHelper.js')
 var fetch = require('node-fetch')
+var fs = require('fs')
+var apicache = require('apicache')
+let cache = apicache.middleware
+
+
 // router.get('/spotify', async function(req, res, next) {
 // 	if (req.session.passport && req.session.passport.user.spotify) {
 // 		console.log('authed!')
@@ -70,6 +75,66 @@ router.get('/music/lastfm/artists', async function(req, res, next) {
 	res.json(json)
 })
 
+router.get('/music/lastfm/tracks/oneyear', cache('30 minutes'), async function(req, res, next) {
+	if (!req.query.username)
+		res.send('No username provided')
+
+	var apiKey = process.env.lastfm_api_key
+	var apiSecret = process.env.lastfm_api_secret
+
+	var oneYearAgo = new Date()
+	oneYearAgo = oneYearAgo.setFullYear( new Date().getFullYear() - 1 )
+	// new Date('2012.08.10').getTime() / 1000
+	// Convert to unix time
+	oneYearAgo = parseInt(new Date(oneYearAgo).getTime() / 1000)
+	console.log(oneYearAgo)
+
+	var numPages = 40
+	var data = []
+	var urls = []
+	for (var i = 1; i <= numPages; i++) {
+		console.log(i)
+		var url = `https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=${req.query.username}&api_key=${apiKey}&limit=200&page=${i}&format=json&from=${oneYearAgo}`
+		urls.push(url)
+	}
+
+	var data = await Promise.all(urls.map(async url => {
+  	var response = await fetch(url)
+  	var responseJson
+  	console.log(response)
+  	try {
+	  	var responseJson = await response.json()
+	  	console.log(responseJson.recenttracks.track)
+	  	return responseJson
+  	}
+  	catch(err) {
+  		console.log(err)
+  		var responseJson = await response.json()
+  		console.log(responseJson)
+  		if (responseJson.status === 200)
+		  	return responseJson
+		  else
+	  		console.log(responseJson)
+  	}
+	}))
+
+	// console.log(responseJson)
+
+	// One year ago
+	
+	// data.push(responseJson)
+	// console.log(parseInt(responseJson.recenttracks.track[0].date.uts))
+	// if (oneYearAgo > parseInt(responseJson.recenttracks.track[0].date.uts) || responseJson.length == 0) {
+		// break
+	// }
+
+	// }))
+	// }
+
+	data = data.reduce((acc, curr) => acc.concat(curr.recenttracks.track), [])
+	// data = JSON.parse(fs.readFileSync('public/data.json'))
+	res.json(data)
+})
 
 
 router.get('/music/lastfm/tracks', async function(req, res, next) {
@@ -78,6 +143,10 @@ router.get('/music/lastfm/tracks', async function(req, res, next) {
 
 	var apiKey = process.env.lastfm_api_key
 	var apiSecret = process.env.lastfm_api_secret
+
+	if (req.query.minDate && req.query.maxDate) {
+
+	}
 	var numPages = 5
 	var urls = []
 	for (var i = 1; i <= numPages; i++)
@@ -89,6 +158,7 @@ router.get('/music/lastfm/tracks', async function(req, res, next) {
 	}))
 
 	data = data.reduce((acc, curr) => acc.concat(curr.recenttracks.track), [])
+	// data = JSON.parse(fs.readFileSync('public/data.json'))
 	res.json(data)
 })
 

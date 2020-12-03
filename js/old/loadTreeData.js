@@ -1,20 +1,15 @@
-import { csv, hierarchy, json } from 'd3';
-// import lastfmapi from 'lastfmapi';
-// import LastFM from 'last-fm';
+import { hierarchy, json } from 'd3';
 
 export const loadTreeData = (tracksUrl, artistsUrl) => {
   // cnosole.log(lastfmapi)
   return Promise.all([
     json(tracksUrl),
     json(artistsUrl),
-    json('../music-viz/genreHierarchy.json'),
-    // json('data/artists.json'), 
-    // json('data/tracks.json')
+    json('../music-viz/genreHierarchy.json')
     ]
   ).then(data => {
     console.log(data)
-    // const csvData = data[0];
-    var jsonData = data[2];
+    var treeData = data[2];
     const artistData = data[1];
     const trackData = data[0];
     const startDate = new Date('2019', '00', '01')
@@ -28,17 +23,19 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
     var totalPlaysByGenre = {};
     var totalPlaysByTrack = {};
     var deepestGenresByArtist = {};
+    var depthsByGenre = {};
+    var listOfArtistsByGenre = {};
     
     var topGenres = [];
     var topArtists = [];
     var topTracks = [];
-    var topTracksUniqueArtists = [];
+    // var topTracksUniqueArtists = [];
     var byWeekPlaysGenre = [];
     var byWeekPlaysArtist = [];
     var byWeekPlaysTrack = [];
     var weekDict = {};
-    const numArtists = 100;
-    const numGenres = 50;
+    // const numArtists = 100;
+    // const numGenres = 50;
 
     // Bad tags included in the data set. Removed anything country-specific or anything I considered 'not a genre'
     const genresToRemove = ['seenlive', 'femalevocalists', '', 'british', 'japanese', 'ofwgkta', 'irish', 'usa', 'australia', 
@@ -47,10 +44,10 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
       'chillout', 'singersongwriter', 'acoustic'];
 
     // Remove these character from the genre names
-    const punctuationToRemove = [' ', '-'];
+    // const punctuationToRemove = [' ', '-'];
 
-    var genreHierarchy = hierarchy(jsonData); 
-    genreHierarchy.data = jsonData; 
+    var genreHierarchy = hierarchy(treeData); 
+    genreHierarchy.data = treeData; 
 
     genreHierarchy.sort((a,b) => {
       const aLen = a.children === undefined ? 0 : a.children.length;
@@ -64,9 +61,10 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
       totalPlaysByGenre[name] = { 
         depth: d.depth,
         plays: 0,
-      };  
+      };
+      depthsByGenre[name] = d.depth;
     })
-        
+    
     trackData.forEach(d => {
       d.listen_date = new Date(d.listen_date);
       if (d.listen_date < startDate || d.listen_date > endDate)
@@ -75,24 +73,30 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
 
 
       d.genre = artistData.filter(a => a.name == d.artist)[0].genres
-      // console.log(d.genre)
+
+      // d.genre.forEach(g => return max())
+      // var deepestGenre = Math.max(d.genre.map(g => depthsByGenre[g]))
+      // console.log(deepestGenre)
       if (d.genre === "")
         return;
+
+      //If there's no genre we can't do much
+      if (d.genre.length == 0)
+        return;
+
       d.genre = d.genre
         // .replace(/[[\]]/g, '')
         // .split(',')
         .map(g => g.toLowerCase().replace(/\s|-/g, ''))
         .filter(g => !genresToRemove.includes(g))
       
-      //If there's no genre we can't do much
-      if (d.genre.length == 0)
-        return;
+      
 
       // Convert time since Jan 1, 2018 from msec to # of weeks
       // 1000 msec/sec, 60 sec/min, 60 min/hr, 24 hr/day, 7 days/week, +1 so it starts on week 1
       d.weekNum = (parseInt((d.listen_date - startDate)/1000/60/60/24/7 + 1));
       // console.log(d.weekNum)
-      const maxGenre = d.genre[0];
+      // const maxGenre = d.genre[0];
       
       if (totalPlaysByArtist[d.artist] === undefined)
         totalPlaysByArtist[d.artist] = 1;
@@ -104,7 +108,7 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
       else
         totalPlaysByTrack[d.track].plays += 1;
       
-      //Add in the genres not in the tree but  give them negative depth so they are sorted last
+      //Add in the genres not in the tree but give them negative depth so they are sorted last
       d.genre.forEach(g => {
         if (totalPlaysByGenre[g] === undefined)
           totalPlaysByGenre[g] = { depth: -1, plays: 1};
@@ -144,7 +148,7 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
     console.log(sortedTrackList);
     Object.keys(weekDict).forEach(w => {
       const i = +w - 1;
-      var obj = {week: i + 1};
+      // var obj = {week: i + 1};
       
       topArtists = sortedArtistList//.slice(0, numArtists);
       topGenres = sortedGenreList//.slice(0, numGenres);
@@ -190,7 +194,7 @@ export const loadTreeData = (tracksUrl, artistsUrl) => {
 
     var toReturn = {}; 
     // toReturn.csvData = csvData; 
-    toReturn.jsonData = genreHierarchy.data;
+    toReturn.treeData = genreHierarchy.data;
     toReturn.byWeekPlaysGenre = byWeekPlaysGenre.reverse(); 
     toReturn.byWeekPlaysArtist = byWeekPlaysArtist;
     toReturn.byWeekPlaysTrack = byWeekPlaysTrack;

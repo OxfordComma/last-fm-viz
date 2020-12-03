@@ -13,7 +13,7 @@ class StackedArea extends React.Component {
 	componentDidMount() {
 		this.update();
 	}
-	// Whenever the component updates, select the <g> from the DOM, and use D3 to manipulte circles
+
 	componentDidUpdate() {
 		this.update();
 	}
@@ -36,7 +36,7 @@ class StackedArea extends React.Component {
 			.nice();
 	}
 
-	updateChartArea() {
+	updateBackground() {
 		let background = d3.select(this.chartAreaRef.current).selectAll('rect').data([null])
 		var backgroundEnter = background.enter().append('rect')
 			.attr('class', 'chart-background')
@@ -48,7 +48,9 @@ class StackedArea extends React.Component {
 
 		backgroundEnter.merge(background)
 			.on('click', d => this.props.onClickBackground(d))
+	}
 
+	updateChartArea() {
 
 		const areaGenerator = d3.area()
 			.x(d => {
@@ -84,7 +86,7 @@ class StackedArea extends React.Component {
 					// console.log(d)
 					return this.props.colorScale(d.key)
 				})
-				.attr('transform', `translate(${(this.props.width)/2 - 150}, 0) rotate(90)`)
+				.attr('transform', `translate(${(this.props.width)/2}, 0) rotate(90)`)
 				.attr('d', areaGenerator)
 
 		lines.merge(linesEnter)
@@ -138,7 +140,7 @@ class StackedArea extends React.Component {
 		xAxisGEnter.merge(xAxisG)
 			.selectAll('line')
 				.attr('stroke', 'currentColor')
-				.attr('stroke-width', 5)
+				.attr('stroke-width', 1)
 				.attr('opacity', 1)
 				
 				// .attr('transform', 'translate(20, 20)')
@@ -185,25 +187,26 @@ class StackedArea extends React.Component {
 			// .text(yAxisLabel);
 	}
 	update() {
-			this.updateScales();
-			this.updateChartArea();
-			this.updateAxes();
+		this.updateBackground()
+		this.updateScales();
+		this.updateChartArea();
+		this.updateAxes();
 
-		}
-
-		render() {
-			if (this.props.width == undefined || this.props.height == undefined) {
-				return <g ref={this.chartAreaRef}
-						transform={`translate(${this.props.margin.left}, ${this.props.margin.top})`} />
-			}
-
-			return (
-				<svg ref={this.chartAreaRef} 
-					className="stacked-area" width={this.props.width} height={this.props.height} transform={`translate(${this.props.margin.left}, ${this.props.margin.top})`}>
-				</svg>
-			)
-		}
 	}
+
+	render() {
+		if (this.props.width == undefined || this.props.height == undefined) {
+			return <g ref={this.chartAreaRef}
+					transform={`translate(${this.props.margin.left}, ${this.props.margin.top})`} />
+		}
+
+		return (
+			<svg ref={this.chartAreaRef} 
+				className="stacked-area" width={this.props.width} height={this.props.height} transform={`translate(${this.props.margin.left}, ${this.props.margin.top})`}>
+			</svg>
+		)
+	}
+}
 
 StackedArea.defaultProps = {
 	seriesData: [],

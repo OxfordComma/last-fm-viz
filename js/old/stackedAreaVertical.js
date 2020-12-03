@@ -1,18 +1,18 @@
 import { 
-  select, 
+  // select, 
   scaleTime, 
   scaleLinear, 
-  extent,
+  // extent,
   axisLeft,
   axisBottom,
-  format,
+  // format,
   area,
-  stack,
+  // stack,
   max,
-  sum,
-  csv
+  sum
+  // csv
 } from 'd3';
-import { colorLegend } from './colorLegend';
+// import { colorLegend } from './colorLegend';
 
 export const stackedAreaVertical = (selection, props) => {
   const {
@@ -43,10 +43,10 @@ export const stackedAreaVertical = (selection, props) => {
     .append('g')
       .attr('class', 'container');
 
-  const h = selection.selectAll('.axes').data([null]);
-  const hEnter = h.enter()
-    .append('g')
-      .attr('class', 'axes');
+  // const h = selection.selectAll('.axes').data([null]);
+  // const hEnter = h.enter()
+  //   .append('g')
+  //     .attr('class', 'axes');
 
   const artistText = selection.selectAll('.artist-text').data(selectedLegendList)
   const artistTextEnter = artistText.enter().append('g')
@@ -65,10 +65,10 @@ export const stackedAreaVertical = (selection, props) => {
   artistText.exit()
     .remove()
  
-  const xValue = d => d.week;
+  // const xValue = d => d.week;
 
-  const xAxisLabel = 'Week';
-  const yAxisLabel = 'Plays';
+  // const xAxisLabel = 'Week';
+  // const yAxisLabel = 'Plays';
   
   // X-axis and scale
   // This converts from the week scale to a day scale
@@ -105,7 +105,7 @@ export const stackedAreaVertical = (selection, props) => {
       .call(xAxis)
       .selectAll('text')
         .attr('text-anchor', 'start')
-        .attr('transform', `rotate(90) translate(0, 0)`);
+        .attr('transform', `rotate(90) translate(400, 0)`);
 
   xAxisGEnter.merge(xAxisG).selectAll('.domain').remove()
   
@@ -117,9 +117,9 @@ export const stackedAreaVertical = (selection, props) => {
   //     .attr('fill', 'black')
   //     .text(xAxisLabel);
  
-  const yAxisTickFormat = number =>
-    format('.2s')(number)
-      .replace('.0', '');
+  // const yAxisTickFormat = number =>
+  //   format('.2s')(number)
+  //     .replace('.0', '');
   
   const yAxis = axisLeft(yScale)
     .ticks('none')
@@ -161,8 +161,8 @@ export const stackedAreaVertical = (selection, props) => {
     .y1(d => yScale(selectedLegendList.length != 0 && (selectedLegendList.includes(d.artist)) ? d[1] - d[0] : d[1]))
     .curve(d3.curveBasis);
   
-  const lastYValue = d =>
-    yValue(d.values[d.values.length - 1]);
+  // const lastYValue = d =>
+  //   yValue(d.values[d.values.length - 1]);
   
   const lines = selection.selectAll('.line-path').data(series);
 
@@ -182,7 +182,7 @@ export const stackedAreaVertical = (selection, props) => {
     .transition()
       .duration(200)
         .attr('opacity', d => {
-          return (selectedLegendList.length == 0 || selectedLegendList.includes(d.key)) ? 1 : 0})
+          return (selectedLegendList.length == 0 || selectedLegendList.includes(d.key)) ? 1 : 0.1})
         .attr('stroke-width', d => (selectedLegendList.length != 0 || selectedLegendList.includes(d.key)) ? 0.05 : 0);
 
   // const annotations = []
