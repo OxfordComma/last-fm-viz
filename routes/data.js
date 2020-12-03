@@ -147,7 +147,7 @@ router.get('/music/lastfm/tracks', async function(req, res, next) {
 	if (req.query.minDate && req.query.maxDate) {
 
 	}
-	var numPages = 5
+	var numPages = 10
 	var urls = []
 	for (var i = 1; i <= numPages; i++)
 		urls.push(`https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=${req.query.username}&api_key=${apiKey}&limit=200&page=${i}&format=json`)
