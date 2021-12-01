@@ -62,7 +62,9 @@ class StackedAreaLastFm extends React.Component {
 			dataUrl = "/data/music/lastfm/tracks/oneyear?username="+this.state.username
 		}
 		var data = await d3.json(dataUrl)
+		data = data.filter(d => d.date)
 		console.log(data)
+		// console.log(data.map(d => d.date))
 		
 		var counts = d3.nest()
 			.key(this.state.legendBy)

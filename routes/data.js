@@ -131,7 +131,7 @@ router.get('/music/lastfm/tracks/oneyear', cache('30 minutes'), async function(r
 	// }))
 	// }
 
-	data = data.reduce((acc, curr) => acc.concat(curr.recenttracks.track), [])
+	data = data.reduce((acc, curr) => acc.concat(curr.recenttracks.track), []).filter(d => !d['@attr']?.nowplaying)
 	// data = JSON.parse(fs.readFileSync('public/data.json'))
 	res.json(data)
 })
